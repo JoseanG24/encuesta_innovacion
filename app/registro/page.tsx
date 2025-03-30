@@ -1,58 +1,72 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import gsap from "gsap"
+import { useState, useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import gsap from "gsap";
 
 export default function RegistroPage() {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
-  })
+  });
 
-  const backgroundRef = useRef(null)
-  const circle1Ref = useRef(null)
-  const circle2Ref = useRef(null)
-  const circle3Ref = useRef(null)
-  const formRef = useRef(null)
-  const imageRef = useRef(null)
+  // Referencias con tipos específicos
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const circle1Ref = useRef<HTMLDivElement>(null);
+  const circle2Ref = useRef<HTMLDivElement>(null);
+  const circle3Ref = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Create background animations with GSAP
-    const tl = gsap.timeline()
+    // Verificar que las referencias existen
+    if (!circle1Ref.current || !circle2Ref.current || !circle3Ref.current || 
+        !formRef.current || !imageRef.current) return;
 
-    // Animate the circles
+    const tl = gsap.timeline();
+
+    // Animaciones de círculos
     tl.fromTo(
       circle1Ref.current,
       { x: -100, y: -100, opacity: 0 },
-      { x: 0, y: 0, opacity: 0.7, duration: 1.5, ease: "power3.out" },
+      { x: 0, y: 0, opacity: 0.7, duration: 1.5, ease: "power3.out" }
     )
-      .fromTo(
-        circle2Ref.current,
-        { x: 100, y: -100, opacity: 0 },
-        { x: 0, y: 0, opacity: 0.5, duration: 1.5, ease: "power3.out" },
-        "-=1.3",
-      )
-      .fromTo(
-        circle3Ref.current,
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 0.6, duration: 1.5, ease: "power3.out" },
-        "-=1.3",
-      )
+    .fromTo(
+      circle2Ref.current,
+      { x: 100, y: -100, opacity: 0 },
+      { x: 0, y: 0, opacity: 0.5, duration: 1.5, ease: "power3.out" },
+      "-=1.3"
+    )
+    .fromTo(
+      circle3Ref.current,
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 0.6, duration: 1.5, ease: "power3.out" },
+      "-=1.3"
+    );
 
-    // Animate the image
-    tl.fromTo(imageRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" }, "-=1")
+    // Animación de imagen
+    tl.fromTo(
+      imageRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" },
+      "-=1"
+    );
 
-    // Animate the form
-    tl.fromTo(formRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.8")
+    // Animación del formulario
+    tl.fromTo(
+      formRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power2.out" },
+      "-=0.8"
+    );
 
-    // Create floating animation for background elements
+    // Animación flotante para elementos de fondo
     gsap.to([circle1Ref.current, circle2Ref.current, circle3Ref.current], {
       y: "random(-20, 20)",
       x: "random(-20, 20)",
@@ -62,46 +76,51 @@ export default function RegistroPage() {
       repeat: -1,
       yoyo: true,
       stagger: 0.2,
-    })
+    });
 
-    // Subtle hover animation for the image
+    // Animación sutil para la imagen
     gsap.to(imageRef.current, {
       y: -10,
       duration: 3,
       ease: "sine.inOut",
       repeat: -1,
       yoyo: true,
-    })
+    });
 
     return () => {
-      // Clean up animations
-      gsap.killTweensOf([circle1Ref.current, circle2Ref.current, circle3Ref.current, formRef.current, imageRef.current])
-    }
-  }, [])
+      // Limpieza de animaciones
+      if (circle1Ref.current && circle2Ref.current && circle3Ref.current && 
+          formRef.current && imageRef.current) {
+        gsap.killTweensOf([
+          circle1Ref.current,
+          circle2Ref.current,
+          circle3Ref.current,
+          formRef.current,
+          imageRef.current
+        ]);
+      }
+    };
+  }, []);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-    // Validate form
     if (!formData.nombre || !formData.email) {
-      return
+      return;
     }
 
-    // Store user data in localStorage to access it in the survey page
-    localStorage.setItem("surveyUser", JSON.stringify(formData))
-
-    // Navigate to the survey page
-    router.push("/encuesta")
-  }
+    localStorage.setItem("surveyUser", JSON.stringify(formData));
+    router.push("/encuesta");
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-gradient-to-b from-slate-50 to-slate-100">
-      {/* Background elements */}
+      {/* Elementos de fondo */}
       <div ref={backgroundRef} className="absolute inset-0 z-0 overflow-hidden">
         <div
           ref={circle1Ref}
@@ -117,17 +136,19 @@ export default function RegistroPage() {
         />
       </div>
 
-      {/* Main content */}
+      {/* Contenido principal */}
       <div className="z-10 w-full max-w-5xl grid md:grid-cols-1 gap-8 items-center justify-center">
-        {/* Form section */}
+        {/* Sección del formulario */}
         <div ref={formRef} className="opacity-0 w-full max-w-md mx-auto">
           <Card className="backdrop-blur-sm bg-white/90 shadow-xl p-8">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl md:text-3xl font-bold">Encuesta De Innovación 2025</CardTitle>
+              <CardTitle className="text-2xl md:text-3xl font-bold">
+                Encuesta De Innovación 2025
+              </CardTitle>
             </CardHeader>
 
-            {/* Mobile image - only shown on small screens */}
-            <div className="md:hidden px-6 pb-4">
+            {/* Imagen para móviles */}
+            <div ref={imageRef} className="md:hidden px-6 pb-4">
               <div className="relative w-full h-[200px]">
                 <Image
                   src="/placeholder.svg?height=400&width=400"
@@ -167,16 +188,15 @@ export default function RegistroPage() {
                     className="bg-white/80"
                   />
                 </div>
+
+                <Button type="submit" className="w-full hover:cursor-pointer" size="lg">
+                  Continuar
+                </Button>
               </form>
             </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full hover:cursor-pointer" size="lg" onClick={handleSubmit}>
-                Continuar
-              </Button>
-            </CardFooter>
           </Card>
         </div>
       </div>
     </div>
-  )
+  );
 }
