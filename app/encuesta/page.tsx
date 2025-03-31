@@ -104,7 +104,7 @@ export default function EncuestaPage() {
     const userData = JSON.parse(localStorage.getItem("surveyUser") || "{}");
     
     try {
-      const response = await fetch('/api/send-results', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -269,25 +269,25 @@ export default function EncuestaPage() {
       <footer className="bg-slate-900 text-white py-6 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center mb-4 md:mb-0">
+            {/* <div className="flex items-center mb-4 md:mb-0">
               <div className="w-32 h-12 bg-slate-800 flex items-center justify-center rounded mr-4">
                 <span className="font-bold">LOGO</span>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span>(+123) 456-7890</span>
+                <span>(+502) 3289-3042</span>
               </div>
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span>contacto@encuestainnovacion.com</span>
+                <span>oscarrojasmorillo@gmail.com</span>
               </div>
             </div>
 
             <div className="text-sm text-slate-400 mt-4 md:mt-0">
-              © {new Date().getFullYear()} Encuesta de Innovación
+              © {new Date().getFullYear()}
             </div>
           </div>
         </div>

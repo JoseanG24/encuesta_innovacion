@@ -52,7 +52,7 @@ export default function SurveyLandingPage() {
           transition={{ duration: 0.7, delay: 0.5 }}
         >
           <motion.h2
-            className="text-3xl md:text-4xl font-semibold text-center mb-6" // Aumenté el tamaño de la fuente
+            className="text-3xl md:text-4xl font-semibold text-center mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.8 }}
@@ -70,7 +70,7 @@ export default function SurveyLandingPage() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 1 + index * 0.2 }}
-                className="text-lg md:text-xl" // Aumenté el tamaño de la fuente
+                className="text-lg md:text-xl"
               >
                 {paragraph}
               </motion.p>
@@ -92,7 +92,7 @@ export default function SurveyLandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto bg-slate-900 text-white py-8 px-4 md:px-6">
+      <footer className="mt-auto bg-slate-700 text-white py-8 px-4 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col items-center space-y-6">
             <motion.div
@@ -100,11 +100,14 @@ export default function SurveyLandingPage() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, delay: 2 }}
-              whileHover={{ rotate: [0, -5, 5, -5, 0], transition: { duration: 0.5 } }}
             >
-              <div className="w-40 h-16 bg-slate-800 flex items-center justify-center rounded">
-                <span className="font-bold text-xl">LOGO</span>
-              </div>
+              <Image
+                src="/rndu-08-150x150.png" // Asegúrate de colocar la ruta correcta de tu logo
+                alt="Logo"
+                width={160} // Ajusta el tamaño según tu necesidad
+                height={64}
+                className="rounded"
+              />
             </motion.div>
             <motion.div
               className="flex flex-col items-center space-y-2"
@@ -127,7 +130,7 @@ export default function SurveyLandingPage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 2.4 }}
             >
-              © {new Date().getFullYear()} Encuesta de Innovación. Todos los derechos reservados.
+              © {new Date().getFullYear()} Todos los derechos reservados.
             </motion.div>
           </div>
         </div>

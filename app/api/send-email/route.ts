@@ -20,8 +20,8 @@ export async function POST(request: Request) {
     console.log('Respuestas recibidas:', answers);
 
     const emailData = await resend.emails.send({
-      from: 'Encuesta Innovación <encuesta@tudominio.com>',
-      to: ['dueño@empresa.com'],
+      from: 'onboarding@resend.dev',
+      to: ['oscarrojasmorillo@gmail.com'],
       subject: `Resultados encuesta de ${userName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
