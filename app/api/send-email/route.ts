@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -14,14 +14,15 @@ interface EmailPayload {
 
 export async function POST(request: Request) {
   try {
-    const { userName, userEmail, totalScore, maxScore, percentage, answers } = await request.json() as EmailPayload;
+    const { userName, userEmail, totalScore, maxScore, percentage, answers } =
+      (await request.json()) as EmailPayload;
 
     // Log de los answers para verificación (elimina si no es necesario)
-    console.log('Respuestas recibidas:', answers);
+    console.log("Respuestas recibidas:", answers);
 
     const emailData = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: ['oscarrojasmorillo@gmail.com'],
+      from: "onboarding@resend.dev",
+      to: ["oscarrojasmorillo@gmail.com", "jsandoval@industriaguate.com"],
       subject: `Resultados encuesta de ${userName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -42,12 +43,16 @@ export async function POST(request: Request) {
           
           <div style="margin-top: 24px;">
             <h2 style="color: #7c3aed;">Detalle de respuestas</h2>
-            ${Object.entries(answers).map(([questionId, answer]) => `
+            ${Object.entries(answers)
+              .map(
+                ([questionId, answer]) => `
               <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
                 <p style="margin: 0 0 4px 0; font-weight: 500;">Pregunta ID: ${questionId}</p>
                 <p style="margin: 0; color: #4b5563;">Respuesta: ${answer}</p>
               </div>
-            `).join('')}
+            `
+              )
+              .join("")}
           </div>
           
           <div style="margin-top: 24px; font-size: 14px; color: #6b7280;">
@@ -60,9 +65,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, data: emailData });
   } catch (err) {
     const error = err as Error;
-    console.error('Error al enviar resultados:', error.message);
+    console.error("Error al enviar resultados:", error.message);
     return NextResponse.json(
-      { error: 'Error al enviar resultados', details: error.message },
+      { error: "Error al enviar resultados", details: error.message },
       { status: 500 }
     );
   }
