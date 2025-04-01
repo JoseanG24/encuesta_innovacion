@@ -147,19 +147,6 @@ export default function RegistroPage() {
               </CardTitle>
             </CardHeader>
 
-            {/* Imagen para móviles */}
-            <div ref={imageRef} className="md:hidden px-6 pb-4">
-              <div className="relative w-full h-[200px]">
-                <Image
-                  src="/placeholder.svg?height=400&width=400"
-                  alt="Innovación empresarial"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-            </div>
-
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
