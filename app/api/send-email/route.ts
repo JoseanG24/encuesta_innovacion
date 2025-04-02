@@ -48,7 +48,7 @@ export async function POST(request: Request) {
               .map(
                 ([questionId, answer]) => `
               <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;">
-                <p style="margin: 0 0 4px 0; font-weight: 500;">Pregunta ID: ${questionId}</p>
+                <p style="margin: 0 0 4px 0; font-weight: 500;">Número de pregunta: ${questionId}</p>
                 <p style="margin: 0; color: #4b5563;">Respuesta: ${answer}</p>
               </div>
             `
