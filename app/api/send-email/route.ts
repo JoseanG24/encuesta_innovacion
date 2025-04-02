@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const emailData = await resend.emails.send({
       from: "onboarding@resend.dev",
       // to: ["oscarrojasmorillo@gmail.com", "jsandoval@industriaguate.com"],
-      to: "jaguzman@unis.edu.gt",
+      to: "joseandresg240904@gmail.com",
       subject: `Resultados encuesta de ${userName}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
