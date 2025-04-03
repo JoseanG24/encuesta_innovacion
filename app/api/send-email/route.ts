@@ -17,7 +17,6 @@ export async function POST(request: Request) {
     const { userName, userEmail, totalScore, maxScore, percentage, answers } =
       (await request.json()) as EmailPayload;
 
-    // Log de los answers para verificación (elimina si no es necesario)
     console.log("Respuestas recibidas:", answers);
 
     const emailData = await resend.emails.send({
